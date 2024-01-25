@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lawDepoTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f006148eba86c37612180688ba5243b932fa4ad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("lawDepoTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lawDepoTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

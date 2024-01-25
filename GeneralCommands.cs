@@ -9,40 +9,54 @@ namespace lawDepoTest{
     public class GeneralCommands{
         public static IWebDriver mainDriver = new ChromeDriver();
         public static int itemsInCart;
-        public static double totalCartPrice = 0.0;
         WebDriverWait wait = new WebDriverWait(mainDriver, TimeSpan.FromSeconds(3));
 
+        //Naviate to site, hard-coded value
         public void AccessSite(){
             mainDriver.Navigate().GoToUrl("https://www.saucedemo.com/");
         }
 
+        //Close site and exit program
         public void CloseSite(){
             mainDriver.Quit();
         }
 
+        /*
+        Locates element for list of usernames
+        Validates element is not null
+        Splits the list of credentials by new lines and stores in array
+        Parameters:
+            login_credentials to specify credentials element ID
+        Returns list of credentials 
+        or
+        Throws exception if list of credentials are null
+        */
         public List<string> GetCredList(){
             List<string> credList = new List<string>();
-            //get list of creds
             try {
                 IWebElement creds = mainDriver.FindElement(By.Id("login_credentials"));
                 if (creds != null){
-                    //split all creds in div and store in list
                     string lgCreds = creds.Text;
                     credList = lgCreds.Split(new[] { '\r', '\n' }).ToList();
                 }
             }
-            //catch if credentials are null
             catch (NoSuchElementException) {
                 throw new NoSuchElementException("login creds null");
             }
             return credList;
         }
 
+        /*
+        Locates element based on parameter type
+        Calls ClickMe
+        Parameter: 
+            element id, Xpath or classname
+        Throws exception if locator is null
+        */
         public void FindMe(string locator){
             IWebElement button;
             Thread.Sleep(TimeSpan.FromSeconds(3));
             try {
-                //if the string value is looking for an XPath
                 if (locator.Contains("item") || locator.Contains("header")){
                     button = mainDriver.FindElement(By.XPath(locator));
                 }
@@ -50,7 +64,6 @@ namespace lawDepoTest{
                     button = mainDriver.FindElement(By.ClassName(locator));
                 }
                 else{
-                    //if the string is looking for an id
                     button = mainDriver.FindElement(By.Id(locator));
                 }
                 ClickMe(button);
@@ -60,20 +73,31 @@ namespace lawDepoTest{
             }
         }
 
+        /*
+        Locates element from given param
+        Parameter: 
+            WebElement, already specified from FindMe
+        Throws exception if button does not trigger any change, validated through statecheck 
+        */
         public void ClickMe(IWebElement button){
             try {
                 button.Click();
-                //validate there was changes on the page after the click
                 wait.Until(mainDriver => ((IJavaScriptExecutor)mainDriver).ExecuteScript("return document.readyState").Equals("complete"));
-                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.StalenessOf(button));
             }
             catch (ElementClickInterceptedException) {
                 throw new WebDriverException("button did not trigger any changes");
             }
         }
 
-        //validate field exists
-        //throw exception if element null
+        /*
+        Locates element based on locator already specified
+        Throws exceptions for null, empty or lock_out_user
+        Updates input field with value and validates if input field is changed
+        Parameter: 
+            element id, Xpath or classname
+            value to compare to 
+        Throws exceptions if element not found, input field is not updated
+        */
         public void InputValue(By locator, string value){
             try {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
@@ -101,11 +125,15 @@ namespace lawDepoTest{
             }
         }
 
-        //validates 2 elements equality
+        /*
+        Compares 2 string values 
+        Parameter: 
+            value1 and value2 strings
+        Throws exceptions if element not equal or not found
+        */
         public void AssertSelf(string value1, string value2){
             string cartItems = "";
             try {
-                //validating cart items
                 if (value1.Contains("contents")){
                     cartItems = FinalCartCount(value1).ToString();
                     Assert.That(cartItems, Is.EqualTo(value2), "strings are equal");
@@ -119,12 +147,21 @@ namespace lawDepoTest{
             }
         }
 
+        /*
+        Validates string in url
+        Parameter: 
+            value string
+        Throws exceptions if url does not contain value or not found
+        */
         public void AssertURL(string urlVal){
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlContains(urlVal));
             Assert.That(mainDriver.Url, Does.Contain(urlVal), "URL does not contain urlVal after login");
         }
-
-        //get the count of items in cart
+        
+        /*
+        Locates element, retrives value, converts to int and compares to items
+        Throws exceptions if the element is not found
+        */
         public int GetCartCount(){
             By spanLocator = By.ClassName("shopping_cart_badge");
             try{
@@ -136,7 +173,6 @@ namespace lawDepoTest{
             }
         }
 
-        //count items in cart in checkout
         public int FinalCartCount(string path){
             try{
                 IWebElement divList = mainDriver.FindElement(By.XPath($"//*[@id='{path}']"));
@@ -146,11 +182,6 @@ namespace lawDepoTest{
             catch (NoSuchElementException) {
                 return 0;
             }
-        }
-
-        public void DropDownMenu(string button1, string button2){
-            FindMe(button1);
-            FindMe(button2);
         }
 
 

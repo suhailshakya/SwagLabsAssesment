@@ -5,6 +5,14 @@ using System;
 namespace lawDepoTest{
     [TestFixture]
     public class SortItemsTest : GeneralCommands{
+
+        /*
+        iterates through all sort buttons
+        parametes: 
+            main sort button looks for id: select_container 
+            sort option uses Xpath with identifier from 1 to 4
+        throws exception if there is an issue with any button
+        */
         [Test]
         public void AllSort(){
             try{

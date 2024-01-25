@@ -4,24 +4,35 @@ using OpenQA.Selenium;
 namespace lawDepoTest{
     [TestFixture]
     public class UpdateCartTest : GeneralCommands{
-        //count items in cart
+        //keep count of items in the cart
         public static int itemCount = 0;
 
+        /*
+        Add items to cart
+        Parametes: 
+            string id to specify the item 
+        */
         [Test]
         public void AddToCart(){
-            //get count of cart, 0
             FindMe("add-to-cart-sauce-labs-bike-light");
             FindMe("add-to-cart-sauce-labs-onesie");
-            //check for +2 difference in cart, AssertSelf
         }
 
+        /*
+        Remove items to cart
+        Parametes: 
+            string id to specify the item 
+        */
         [Test]
         public void RemoveFromCart(){
-            //get count of cart
             FindMe("remove-sauce-labs-bike-light");
-            //check for -1 difference in cart, AssertSelf
         }
 
+        /*
+        Validates the amount of items in the cart matches, items added and removed from cart
+        Parametes: 
+            string id to specify the item 
+        */
         [Test]
         public void ValidateCart(){
             itemCount = GetCartCount();
