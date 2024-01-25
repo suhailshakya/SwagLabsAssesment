@@ -43,10 +43,10 @@ namespace lawDepoTest{
             Thread.Sleep(TimeSpan.FromSeconds(3));
             try {
                 //if the string value is looking for an XPath
-                if (locator.Contains("item")){
-                    button = mainDriver.FindElement(By.XPath($"//*[@id='{locator}']"));
+                if (locator.Contains("item") || locator.Contains("header")){
+                    button = mainDriver.FindElement(By.XPath(locator));
                 }
-                else if (locator.Contains("link")){
+                else if (locator.Contains("link") || locator.Contains("_container")){
                     button = mainDriver.FindElement(By.ClassName(locator));
                 }
                 else{
@@ -146,6 +146,11 @@ namespace lawDepoTest{
             catch (NoSuchElementException) {
                 return 0;
             }
+        }
+
+        public void DropDownMenu(string button1, string button2){
+            FindMe(button1);
+            FindMe(button2);
         }
 
 

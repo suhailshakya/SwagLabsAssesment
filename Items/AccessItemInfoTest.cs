@@ -7,7 +7,7 @@ namespace lawDepoTest{
     public class AccessItemInfoTest : GeneralCommands{
         [Test]
         public void ItemInfo(){
-            string item = "item_0_title_link";
+            string item = "//*[@id='item_0_title_link']";
             //get the item name
             FindMe(item);
             //compare URL has the correct item number --> correct image and name

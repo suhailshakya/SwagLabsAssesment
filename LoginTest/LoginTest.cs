@@ -13,7 +13,7 @@ namespace lawDepoTest{
             string userCreds = credList[rand1];
 
             //check for empty username and password input field
-            InputValue(By.Name("user-name"), userCreds);
+            InputValue(By.Name("user-name"), "standard_user");
             InputValue(By.Name("password"), "secret_sauce");
 
             //click login

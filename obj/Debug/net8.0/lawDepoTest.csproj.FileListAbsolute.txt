@@ -29,3 +29,4 @@
 /Users/suhailshakya/Projects/lawDepoTest/obj/Debug/net8.0/ref/lawDepoTest.dll
 /Users/suhailshakya/Projects/lawDepoTest/bin/Debug/net8.0/WebDriver.Support.dll
 /Users/suhailshakya/Projects/lawDepoTest/bin/Debug/net8.0/SeleniumExtras.WaitHelpers.dll
+/Users/suhailshakya/Projects/lawDepoTest/obj/Debug/net8.0/lawDepoTest.sourcelink.json
